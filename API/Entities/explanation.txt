@@ -1,0 +1,16 @@
+What is entity framework?
+--------------------------
+  FEATURES
+--------------------------
+- Modelling
+- Querying
+- Change Tracking
+- Saving
+- Concurrency (Protect overwritting changes made by another user)(it can roll back any changes)
+- Transactions ()
+- Caching 
+- Built-in convensions
+- Configurations
+- Migrations
+--------------------------
+--------------------------
