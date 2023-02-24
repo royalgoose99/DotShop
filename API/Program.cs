@@ -12,9 +12,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StoreContext>(opt => 
 {
-                                    // data source for DefaultConnection is configured in appsettings
+                                        // data source for DefaultConnection is configured in appsettings
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -24,6 +26,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(opt => 
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    // opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5000");
+});
 
 // app.UseHttpsRedirection();
 
@@ -37,7 +45,7 @@ var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try
 {
-// Applies any pending migrations for the context to the database. Will create the database if it does not already exist.
+    // Applies any pending migrations for the context to the database. Will create the database if it does not already exist.
     context.Database.Migrate();
     DbInitializer.Initialize(context);
 }
